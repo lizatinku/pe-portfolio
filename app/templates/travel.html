@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Places I've Been</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/travel.css') }}">
+
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+U2ZHt5j8eV1JufwQAK3E6V5J0YzcyKnCzzN1fUj4="
+    crossorigin=""
+  />
+</head>
+<body>
+  <section class="travel-body">
+    <h2>🌍 Places I've Visited</h2>
+    <p>Zoom in and click the pins to explore where I've been!</p>
+    <div id="map"></div>
+  </section>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-nvAaEpZtB61N3bFs0gNRtp+1Hz8g76A7m6iZpIvGkRw="
+    crossorigin=""
+  ></script>
+
+  <script>
+    const map = L.map('map').setView([20, 0], 2); // Global view
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+    { name: "Rome, Italy", coords: [41.9028, 12.4964] },
+    { name: "Barcelona, Spain", coords: [41.3851, 2.1734] },
+    { name: "Kerala, India", coords: [10.8505, 76.2711] },
+    { name: "San Francisco, USA", coords: [37.7749, -122.4194] },
+    { name: "Tbilisi, Georgia", coords: [41.7151, 44.8271] }
+    ];
+
+    places.forEach(p => {
+    L.marker(p.coords).addTo(map).bindPopup(p.name);
+    });
+
+  </script>
+</body>
+</html>

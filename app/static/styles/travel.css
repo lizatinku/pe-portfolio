@@ -1,0 +1,26 @@
+.travel-body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.travel-body h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.travel-body p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#map {
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
+  border: 4px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}

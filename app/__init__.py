@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request
-from dotenv import load_dotenv
+from dotenv import load_dotenv  
 
 load_dotenv()
 app = Flask(__name__)
@@ -59,3 +59,7 @@ def experience():
 @app.route('/hobbies')
 def hobbies():
     return render_template("hobbies.html", title="Hobbies")
+
+@app.route('/travel')
+def travel():
+    return render_template("travel.html", title="Places I've Visited")
