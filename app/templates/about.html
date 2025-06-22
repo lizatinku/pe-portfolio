@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/about.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+</head>
+<body class="about-body">
+
+  <section class="about-container">
+    <div class="about-image">
+      <img src="{{ url_for('static', filename='img/liza.jpg') }}" alt="Liza Tinku" />
+    </div>
+    <div class="about-info">
+      <h1>I’m <span class="highlight">Liza Tinku</span>, a Full Stack Developer</h1>
+      <p>
+        This summer, I'm doing the Meta and MLH Fellowship and also interning in a med-tech startup.
+        I love working across the stack and turning fuzzy ideas into powerful digital experiences.
+      </p>
+      <p>
+        I'm passionate about Python, Reactjs, Nextjs, Supabase/Firebase and building and shipping fast.
+        When I'm not coding, you’ll find me at the gym or grabbing froyo or making palak paneer.
+      </p>
+
+      <!-- <div class="social-icons">
+        <a href="https://linkedin.com/in/lizatinkujose" target="_blank"></a>
+        <a href="https://github.com/yourusername" target="_blank"></a>
+        <a href="mailto:lizatj2017@email.com"></a>
+      </div> -->
+
+    </div>
+  </section>
+
+</body>
+</html>
