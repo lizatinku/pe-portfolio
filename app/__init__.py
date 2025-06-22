@@ -55,3 +55,7 @@ def experience():
 
     ]
     return render_template("experience.html", experiences=experiences)
+
+@app.route('/hobbies')
+def hobbies():
+    return render_template("hobbies.html", title="Hobbies")
