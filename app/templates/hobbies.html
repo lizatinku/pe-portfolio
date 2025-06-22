@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Hobbies – Liza Tinku</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/hobbies.css') }}">
+</head>
+<body class="hobbies-body">
+  <section class="hobbies-container">
+<div class="center-image">
+  <img src="{{ url_for('static', filename='img/liza.jpg') }}" alt="Liza Tinku" class="headshot" />
+    <div class="orbit-wrapper">
+      <div class="orbit gym">
+        <img src="{{ url_for('static', filename='img/gym.jpg') }}" alt="Gym" />
+      </div>
+      <div class="orbit palak">
+        <img src="{{ url_for('static', filename='img/palakpaneer.jpg') }}" alt="Palak Paneer" />
+      </div>
+      <div class="orbit tacos">
+        <img src="{{ url_for('static', filename='img/Beeftacos.webp') }}" alt="Beef Tacos" />
+      </div>
+      <div class="orbit friends">
+        <img src="{{ url_for('static', filename='img/friends.jpg') }}" alt="Friends" />
+      </div>
+    </div>
+  </div>
+
+
+    <div class="hobbies-text">
+      <h4 class="gradient-text">I love hitting the gym, cooking delicious meals like palak paneer & beef tacos, and hanging out with friends. It keeps life balanced and fun!</h4>
+    </div>
+  </section>
+</body>
+</html>

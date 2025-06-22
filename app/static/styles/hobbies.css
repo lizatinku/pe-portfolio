@@ -1,0 +1,92 @@
+.hobbies-body {
+  background-color: #000;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 4rem 1rem;
+  margin-top: 100px; 
+}
+
+.hobbies-container {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.center-image {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto 3rem;
+}
+
+.headshot {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+/* .orbit {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1;
+  margin-top: 5px;
+} */
+
+.orbit {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 80%;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.orbit img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.hobbies-text {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-top: 100px; 
+}
+
+.orbit-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  animation: orbitRotate 12s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes orbitRotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.gym    { top: 0; left: 50%; transform: translate(-50%, -50%); }
+.palak  { top: 50%; left: 0%; transform: translate(-50%, -50%); }
+.tacos  { bottom: 0; left: 50%; transform: translate(-50%, 50%); }
+.friends { top: 50%; right: 0%; transform: translate(50%, -50%); }
