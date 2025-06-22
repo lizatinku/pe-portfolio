@@ -1,0 +1,68 @@
+/* ========== ABOUT PAGE STYLING ========== */
+.about-body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  padding: 4rem 1rem;
+}
+
+.about-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-image img {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.5rem;
+}
+
+.about-info h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #10B981;
+  font-weight: 700;
+}
+
+.about-info p {
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tech {
+  color: #3B82F6;
+  font-weight: 500;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+}
+
+.download-btn {
+  margin-top: 1rem;
+  padding: 0.7rem 1.4rem;
+  background-color: #10B981;
+  color: #000;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+  background-color: #059669;
+}
