@@ -1,0 +1,83 @@
+.experience-body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  padding: 4rem 1rem;
+}
+
+.experience-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #ec4899;
+  margin-bottom: 3rem;
+  font-weight: bold;
+}
+
+.timeline {
+  max-width: 800px;
+  margin: auto;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #999;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-left: 40px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.timeline-dot.filled {
+  background-color: #10B981;
+}
+
+.timeline-dot.outlined {
+  border: 3px solid #10B981;
+  background: #000;
+}
+
+.timeline-content {
+  background: #111;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.exp-title {
+  color: #64ffda;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.exp-date {
+  color: #aaa;
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.exp-desc {
+  color: #ddd;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}

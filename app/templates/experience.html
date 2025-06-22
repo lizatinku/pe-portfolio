@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Journey – Experience</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/experience.css') }}">
+</head>
+<body class="experience-body">
+  <section class="experience-section">
+    <h2 class="experience-title">My Journey</h2>
+
+    <div class="timeline">
+      {% for exp in experiences %}
+        <div class="timeline-item">
+          <div class="timeline-dot {% if exp.ongoing %}outlined{% else %}filled{% endif %}"></div>
+          <div class="timeline-content">
+            <h3 class="exp-title">{{ exp.title }}</h3>
+            <p class="exp-date">{{ exp.date }}</p>
+            <p class="exp-desc">{{ exp.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+</body>
+</html>
