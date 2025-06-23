@@ -21,13 +21,8 @@
     <div id="map"></div>
   </section>
 
-  <!-- Leaflet JS -->
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-nvAaEpZtB61N3bFs0gNRtp+1Hz8g76A7m6iZpIvGkRw="
-    crossorigin=""
-  ></script>
-
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script>
     const map = L.map('map').setView([20, 0], 2); // Global view
 
@@ -35,13 +30,21 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const places = [
-    { name: "Rome, Italy", coords: [41.9028, 12.4964] },
-    { name: "Barcelona, Spain", coords: [41.3851, 2.1734] },
+  const places = [
     { name: "Kerala, India", coords: [10.8505, 76.2711] },
-    { name: "San Francisco, USA", coords: [37.7749, -122.4194] },
-    { name: "Tbilisi, Georgia", coords: [41.7151, 44.8271] }
-    ];
+    { name: "Dubai, UAE", coords: [25.2048, 55.2708] },
+    { name: "Delhi, India", coords: [28.6139, 77.2090] },
+    { name: "Chennai, Tamil Nadu, India", coords: [13.0827, 80.2707] },
+    { name: "Tbilisi, Georgia", coords: [41.7151, 44.8271] },
+    { name: "Fatima, Portugal", coords: [39.6255, -8.6659] },
+    { name: "San Francisco, CA, USA", coords: [37.7749, -122.4194] },
+    { name: "Florence, Italy", coords: [43.7696, 11.2558] },
+    { name: "Rome, Italy", coords: [41.9028, 12.4964] },
+    { name: "Venice, Italy", coords: [45.4408, 12.3155] },
+    { name: "Barcelona, Spain", coords: [41.3851, 2.1734] },
+    { name: "Los Angeles, CA, USA", coords: [34.0522, -118.2437] },
+  ];
+
 
     places.forEach(p => {
     L.marker(p.coords).addTo(map).bindPopup(p.name);

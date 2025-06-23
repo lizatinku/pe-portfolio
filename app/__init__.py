@@ -63,3 +63,4 @@ def hobbies():
 @app.route('/travel')
 def travel():
     return render_template("travel.html", title="Places I've Visited")
+
