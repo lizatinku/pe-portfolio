@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block extra_styles %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/education.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class="diagram-container">
+    <!-- Arrows -->
+    <svg width="100%" height="100%">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#10B981" />
+        </marker>
+      </defs>
+
+      <!-- GEMS Arrows -->
+      <line x1="220" y1="120" x2="700" y2="60" marker-end="url(#arrowhead)" />
+      <line x1="220" y1="120" x2="700" y2="120" marker-end="url(#arrowhead)" />
+      <line x1="220" y1="120" x2="700" y2="180" marker-end="url(#arrowhead)" />
+
+      <!-- UC Davis Arrows -->
+      <line x1="220" y1="320" x2="700" y2="260" marker-end="url(#arrowhead)" />
+      <line x1="220" y1="320" x2="700" y2="320" marker-end="url(#arrowhead)" />
+      <line x1="220" y1="320" x2="700" y2="380" marker-end="url(#arrowhead)" />
+      <line x1="220" y1="320" x2="700" y2="440" marker-end="url(#arrowhead)" />
+    </svg>
+
+    <!-- Left Entities -->
+    <div class="entity left school" style="top: 120px;">
+      GEMS Westminster School<br><span class="duration">Sept 2018– June 2022</span>
+    </div>
+    <div class="entity left school" style="top: 320px;">
+      University of California, Davis<br><span class="duration">Sept 2022 - June 2026</span>
+    </div>
+
+    <div class="entity right course" style="top: 60px;">A-Level Mathematics</div>
+    <div class="entity right course" style="top: 120px;">A-Level Physics</div>
+    <div class="entity right course" style="top: 180px;">A-Level IT</div>
+        <div class="entity right course" style="top: 180px;">A-Level Biology</div>
+
+    <div class="entity right course" style="top: 260px;">ECS 170 – Computer Architecture</div>
+    <div class="entity right course" style="top: 320px;">EEC 111 – Semiconductors</div>
+    <div class="entity right course" style="top: 380px;">ECS 122A – Algorithm Analysis</div>
+    <div class="entity right course" style="top: 440px;">EEC 180 – Digital Systems</div>
+  </div>
+{% endblock %}

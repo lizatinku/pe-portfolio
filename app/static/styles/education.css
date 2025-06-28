@@ -1,0 +1,68 @@
+body {
+  background: #000;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.diagram-container {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 400px;
+}
+
+.entity {
+  position: absolute;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #3B82F6;
+  border-radius: 10px;
+  background: #111;
+  font-weight: bold;
+  text-align: center;
+  max-width: 240px;
+  z-index: 2;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.duration {
+  display: block;
+  font-weight: normal;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-top: 0.3rem;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+line, marker {
+  stroke: #10B981;
+  stroke-width: 2px;
+}
+
+/* .course-column {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* 👈 adds spacing between course boxes */
+  z-index: 2;
+} */

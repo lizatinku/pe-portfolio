@@ -13,6 +13,26 @@ def index():
 def about():
     return render_template('about.html', title="About Liza Tinku")
 
+
+@app.route('/education')
+def education():
+    education = [
+        {
+            "degree": "B.S. Computer Engineering",
+            "institution": "University of California, Davis",
+            "date": "Sept 2022 – June 2026",
+            "description": "Relevant coursework: Data Structures, Embedded Systems, Machine Learning",
+            "courses": ["EEC 111", "EEC 180", "ECS 122A", "EEC 170"]
+        },
+        {
+            "degree": "High School Diploma",
+            "institution": "GEMS Westminster School, RAK, UAE",
+            "date": "Sept 2018 – June 2022",
+            "courses": ["A-Level Math", "A-Level Physics", "A Level Computer Science"]
+        }
+    ]
+    return render_template("education.html", title="education")
+
 @app.route('/experience')
 def experience():
     experiences = [

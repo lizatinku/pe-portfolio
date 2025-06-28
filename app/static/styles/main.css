@@ -21,14 +21,53 @@ body {
   overflow-x: hidden;
 }
 
-.mlh-banner {
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: #1d539f;
-  padding: 1rem 0;
-  text-align: center;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.diagram-container {
+  margin-top: 100px;
+}
+
+
+.mlh-logo-container {
+  display: flex;
+  align-items: center;
 }
 
 .mlh-logo {
-  height: 60px;
+  height: 50px;
+}
+
+.menu-bar {
+  display: flex;
+  gap: 1.2rem;
+  margin-right: 20px;
+}
+
+.menu-bar .btn {
+  background-color: #fff;
+  color: #000000;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-bar .btn:hover {
+  background-color: #ec4899;
+  color: #fff;
 }
 
 .btn {
@@ -53,13 +92,59 @@ body {
   margin-top: 1rem;
 }
 
-/* Gradient headline text */
 .gradient-text {
-  background: linear-gradient(to right, #ec4899, #8b5cf6);
+  font: linear-gradient(to right, #ec4899, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
+} */
+
+.animated-gradient-name span {
+  font-size: 5rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  background: linear-gradient(90deg, #ff4d94, #a64dff);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s linear infinite;
 }
+
+.animated-gradient-name span {
+  display: inline-block;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+.animated-gradient-name span:nth-child(1) { animation-delay: 0s; }
+.animated-gradient-name span:nth-child(2) { animation-delay: 0.1s; }
+.animated-gradient-name span:nth-child(3) { animation-delay: 0.2s; }
+.animated-gradient-name span:nth-child(4) { animation-delay: 0.3s; }
+.animated-gradient-name span:nth-child(5) { animation-delay: 0.4s; }
+.animated-gradient-name span:nth-child(6) { animation-delay: 0.5s; }
+.animated-gradient-name span:nth-child(7) { animation-delay: 0.6s; }
+.animated-gradient-name span:nth-child(8) { animation-delay: 0.7s; }
+.animated-gradient-name span:nth-child(9) { animation-delay: 0.8s; }
+.animated-gradient-name span:nth-child(10) { animation-delay: 0.9s; }
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
 
 /* ========== ABOUT PAGE STYLING ========== */
 .about-body {
@@ -128,42 +213,4 @@ body {
 
 .download-btn:hover {
   background-color: #059669;
-}
-
-.education-section {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding: 4rem 2rem;
-}
-
-.education-box {
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #1f1f1f;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 2px solid #3B82F6;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.7;
-}
-
-.education-section {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding: 4rem 2rem;
-}
-
-.education-box {
-  max-width: 500px;
-  margin: 0 auto;
-  background-color: #1f1f1f;
-  padding: 2rem;
-  border-radius: 12px;
-  border: 2px solid #3B82F6;
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.7;
 }

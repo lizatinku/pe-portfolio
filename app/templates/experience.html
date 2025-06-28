@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Journey – Experience</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+{% extends "base.html" %}
+
+{% block extra_styles %}
   <link rel="stylesheet" href="{{ url_for('static', filename='styles/experience.css') }}">
-</head>
-<body class="experience-body">
-  <section class="experience-section">
+{% endblock %}
+
+{% block content %}
+  <section class="experience-section experience-body">
     <h2 class="experience-title">My Journey</h2>
 
     <div class="timeline">
@@ -24,5 +21,4 @@
       {% endfor %}
     </div>
   </section>
-</body>
-</html>
+{% endblock %}

@@ -4,6 +4,7 @@
   font-family: 'Roboto', sans-serif;
   text-align: center;
   padding: 3rem 1rem;
+  padding-top: 120px;
 }
 
 .travel-body h2 {
@@ -18,7 +19,7 @@
 
 #map {
   width: 90%;
-  height: 500px;
+  height: 600px;
   margin: 0 auto;
   border: 4px solid #fff;
   border-radius: 12px;
