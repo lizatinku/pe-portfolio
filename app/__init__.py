@@ -1,9 +1,53 @@
 import os
-from flask import Flask, render_template, request
-from dotenv import load_dotenv  
+import datetime
+from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
+from playhouse.shortcuts import model_to_dict
+
+from .db import mydb
+from .models import TimelinePost
 
 load_dotenv()
+
 app = Flask(__name__)
+
+from peewee import Model, CharField, TextField, DateTimeField
+
+class TimelinePost(Model):
+    name = CharField()
+    email = CharField()
+    content = TextField()
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+    class Meta:
+        database = mydb
+
+@app.route("/api/timeline_post", methods=["POST"])
+def create_timeline_post():
+    name = request.form.get("name")
+    email = request.form.get("email")
+    content = request.form.get("content")
+
+    if not name or not email or not content:
+        return "Invalid input", 400
+
+    post = TimelinePost.create(name=name, email=email, content=content)
+    return jsonify({
+        "id": post.id,
+        "name": post.name,
+        "email": post.email,
+        "content": post.content,
+        "created_at": post.created_at.isoformat()
+    })
+
+@app.route('/api/timeline_post', methods=['GET'])
+def get_timeline_post():
+    return {
+        'timeline_posts': [
+            model_to_dict(p)
+            for p in TimelinePost.select().order_by(TimelinePost.created_at.desc())
+        ]
+    }
 
 @app.route('/')
 def index():
@@ -12,7 +56,6 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html', title="About Liza Tinku")
-
 
 @app.route('/education')
 def education():
@@ -84,3 +127,12 @@ def hobbies():
 def travel():
     return render_template("travel.html", title="Places I've Visited")
 
+
+@app.route("/api/timeline_post/<int:post_id>", methods=["DELETE"])
+def delete_timeline_post(post_id):
+    try:
+        post = TimelinePost.get_by_id(post_id)
+        post.delete_instance()
+        return jsonify({"message": f"Post {post_id} deleted."})
+    except TimelinePost.DoesNotExist:
+        return jsonify({"error": "Post not found."}), 404
