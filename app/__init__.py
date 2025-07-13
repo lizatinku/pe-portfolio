@@ -127,6 +127,9 @@ def hobbies():
 def travel():
     return render_template("travel.html", title="Places I've Visited")
 
+@app.route("/timeline")
+def timeline():
+    return render_template("timeline.html")
 
 @app.route("/api/timeline_post/<int:post_id>", methods=["DELETE"])
 def delete_timeline_post(post_id):

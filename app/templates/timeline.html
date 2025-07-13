@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeline</title>
+</head>
+<body style="background-color: white; color: black; font-family: sans-serif; padding: 20px;">
+
+  <h1>Public Timeline</h1>
+
+  <form id="timeline-form">
+    <input type="text" name="name" placeholder="Your name" required><br><br>
+    <input type="email" name="email" placeholder="Your email" required><br><br>
+    <textarea name="content" placeholder="What's on your mind?" required></textarea><br><br>
+    <button type="submit">Post</button>
+  </form>
+
+  <hr>
+
+  <div id="timeline-posts">
+  </div>
+
+  <script>
+    async function loadTimelinePosts() {
+      const response = await fetch("/api/timeline_post");
+      const data = await response.json();
+      const container = document.getElementById("timeline-posts");
+      container.innerHTML = "";
+
+      data.timeline_posts.forEach(post => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <p><strong>${post.name}</strong> (${post.email})</p>
+          <p>${post.content}</p>
+          <p><em>${post.created_at}</em></p>
+          <hr>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById("timeline-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const response = await fetch("/api/timeline_post", {
+        method: "POST",
+        body: formData
+      });
+      if (response.ok) {
+        form.reset();
+        loadTimelinePosts();
+      } else {
+        alert("Something went wrong!");
+      }
+    });
+
+    window.onload = loadTimelinePosts;
+  </script>
+
+</body>
+</html>
