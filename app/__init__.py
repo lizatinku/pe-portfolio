@@ -3,15 +3,24 @@ import datetime
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 from playhouse.shortcuts import model_to_dict
+from peewee import Model, CharField, TextField, DateTimeField, SqliteDatabase, MySQLDatabase
 
-from .db import mydb
-from .models import TimelinePost
+# Add this block to set up the database depending on environment
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb = SqliteDatabase('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    mydb = MySQLDatabase(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306
+    )
 
 load_dotenv()
 
 app = Flask(__name__)
-
-from peewee import Model, CharField, TextField, DateTimeField
 
 class TimelinePost(Model):
     name = CharField()
@@ -28,8 +37,17 @@ def create_timeline_post():
     email = request.form.get("email")
     content = request.form.get("content")
 
-    if not name or not email or not content:
-        return "Invalid input", 400
+    # Validation for missing name
+    if not name or name.strip() == "":
+        return "Invalid name", 400
+
+    # Validation for missing or empty content
+    if not content or content.strip() == "":
+        return "Invalid content", 400
+
+    # Validation for malformed email (very basic check)
+    if not email or "@" not in email or "." not in email:
+        return "Invalid email", 400
 
     post = TimelinePost.create(name=name, email=email, content=content)
     return jsonify({
