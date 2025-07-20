@@ -3,15 +3,24 @@ import datetime
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 from playhouse.shortcuts import model_to_dict
+from peewee import Model, CharField, TextField, DateTimeField, SqliteDatabase, MySQLDatabase
 
-from .db import mydb
-from .models import TimelinePost
+# Add this block to set up the database depending on environment
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb = SqliteDatabase('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    mydb = MySQLDatabase(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306
+    )
 
 load_dotenv()
 
 app = Flask(__name__)
-
-from peewee import Model, CharField, TextField, DateTimeField
 
 class TimelinePost(Model):
     name = CharField()
