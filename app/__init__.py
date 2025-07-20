@@ -37,8 +37,17 @@ def create_timeline_post():
     email = request.form.get("email")
     content = request.form.get("content")
 
-    if not name or not email or not content:
-        return "Invalid input", 400
+    # Validation for missing name
+    if not name or name.strip() == "":
+        return "Invalid name", 400
+
+    # Validation for missing or empty content
+    if not content or content.strip() == "":
+        return "Invalid content", 400
+
+    # Validation for malformed email (very basic check)
+    if not email or "@" not in email or "." not in email:
+        return "Invalid email", 400
 
     post = TimelinePost.create(name=name, email=email, content=content)
     return jsonify({
