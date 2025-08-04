@@ -24,13 +24,16 @@
     </div>
     <div class="menu-bar">
       <a href="{{ url_for('about') }}" class="btn">About</a>
-      <a href="{{ url_for('experience') }}" class="btn">View Experience</a>
+      <a href="{{ url_for('experience') }}" class="btn">Experience</a>
       <a href="{{ url_for('hobbies') }}" class="btn">Hobbies</a>
-      <a href="{{ url_for('travel') }}" class="btn">Places I've visited</a>
+      <a href="{{ url_for('travel') }}" class="btn">Travel</a>
       <a href="{{ url_for('education') }}" class="btn">Education</a>
+      <a href="{{ url_for('timeline') }}" class="btn">Timeline</a>
     </div>
   </nav>
 
   {% block content %}{% endblock %}
+  {% block extra_scripts %}{% endblock %}
+
 </body>
 </html>

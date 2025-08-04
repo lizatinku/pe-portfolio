@@ -1,64 +1,184 @@
 {% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Timeline</title>
-</head>
-<body style="background-color: white; color: black; font-family: sans-serif; padding: 20px;">
+{% block content %}
+<style>
+  body {
+    background-color: #111;
+    color: white;
+    font-family: sans-serif;
+    padding: 20px;
+    padding-bottom: 20rem;
+  }
 
-  <h1>Public Timeline</h1>
+  h1 {
+    margin-top: 6rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 
-  <form id="timeline-form">
-    <input type="text" name="name" placeholder="Your name" required><br><br>
-    <input type="email" name="email" placeholder="Your email" required><br><br>
-    <textarea name="content" placeholder="What's on your mind?" required></textarea><br><br>
-    <button type="submit">Post</button>
-  </form>
+  form#timeline-form {
+    max-width: 500px;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 
-  <hr>
+  input, textarea, button {
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+  }
 
-  <div id="timeline-posts">
-  </div>
+  button {
+    background-color: #00c66e;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
 
-  <script>
-    async function loadTimelinePosts() {
-      const response = await fetch("/api/timeline_post");
-      const data = await response.json();
-      const container = document.getElementById("timeline-posts");
-      container.innerHTML = "";
+  .timeline-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 8px 0;
+    position: relative;
+  }
 
-      data.timeline_posts.forEach(post => {
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <p><strong>${post.name}</strong> (${post.email})</p>
-          <p>${post.content}</p>
-          <p><em>${post.created_at}</em></p>
-          <hr>
-        `;
-        container.appendChild(div);
-      });
-    }
+  .timeline-line {
+    margin-bottom: -2rem;
+    height: 4px;
+    width: 100%;
+    background-color: #00c66e;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+  }
 
-    document.getElementById("timeline-form").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
-      const response = await fetch("/api/timeline_post", {
-        method: "POST",
-        body: formData
-      });
-      if (response.ok) {
-        form.reset();
-        loadTimelinePosts();
-      } else {
-        alert("Something went wrong!");
+  .timeline-track {
+    display: flex;
+    gap: 80px;
+    position: relative;
+    z-index: 2;
+    padding: 20px 40px;
+  }
+
+  .timeline-entry {
+    padding-top: 10rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 180px;
+  }
+
+  .timeline-point {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #00c66e;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 3;
+  }
+
+  .timeline-entry.empty .timeline-point {
+    background-color: #111;
+  }
+
+  .timeline-post {
+    background: white;
+    color: #111;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid #00c66e;
+    width: 200px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .timeline-entry:nth-child(even) .timeline-post {
+    order: -1;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+</style>
+
+<h1>Wanna tell Liza something? Tell here:)</h1>
+
+<form id="timeline-form">
+  <input type="text" name="name" placeholder="Your name" required>
+  <input type="email" name="email" placeholder="Your email" required>
+  <textarea name="content" placeholder="What's on your mind?" required></textarea>
+  <button type="submit">Post</button>
+</form>
+
+<div class="timeline-wrapper">
+  <div class="timeline-line"></div>
+  <div class="timeline-track" id="timeline-track"></div>
+</div>
+
+<script>
+  async function loadTimelinePosts() {
+    const response = await fetch("/api/timeline_post");
+    const data = await response.json();
+    const container = document.getElementById("timeline-track");
+    container.innerHTML = "";
+
+    const posts = data.timeline_posts;
+    const maxVisible = Math.max(posts.length, 6); // Minimum 6 circles (some empty)
+
+    for (let i = 0; i < maxVisible; i++) {
+      const isPost = i < posts.length;
+      const side = i % 2 === 0 ? "left" : "right";
+      const post = posts[i];
+
+      const entry = document.createElement("div");
+      entry.className = `timeline-entry ${side}`;
+
+      const circle = document.createElement("div");
+      circle.className = "timeline-point";
+      if (!isPost) {
+        circle.style.backgroundColor = "#111"; 
       }
+
+      entry.appendChild(circle);
+
+      if (isPost) {
+        const postDiv = document.createElement("div");
+        postDiv.className = "timeline-post";
+        postDiv.innerHTML = `
+          <p><strong>${post.name}</strong></p>
+          <p><em>${post.email}</em></p>
+          <p>${post.content}</p>
+          <small>${new Date(post.created_at).toLocaleString()}</small>
+        `;
+        entry.appendChild(postDiv);
+      }
+
+      container.appendChild(entry);
+    }
+  }
+
+  document.getElementById("timeline-form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const response = await fetch("/api/timeline_post", {
+      method: "POST",
+      body: formData
     });
+    if (response.ok) {
+      form.reset();
+      loadTimelinePosts();
+    } else {
+      alert("Something went wrong!");
+    }
+  });
 
-    window.onload = loadTimelinePosts;
-  </script>
-
-</body>
-</html>
+  window.onload = loadTimelinePosts;
+</script>
+{% endblock %}
