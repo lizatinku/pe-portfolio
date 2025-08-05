@@ -1,26 +1,32 @@
 body {
   background: #000;
   color: #fff;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 0;
   padding: 2rem 1rem;
 }
 
 .accordion-container {
-  max-width: 700px;
-  margin: 3rem auto;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 10rem auto 3rem;
   padding: 0 1rem;
+  gap: 6rem;
 }
 
 .accordion {
   background-color: #111;
-  border: 1px solid #3B82F6;
-  border-radius: 8px;
-  margin-bottom: 1.2rem;
+  border: 1px solid #00c66e;
+  border-radius: 10px;
+  width: 25rem;
   overflow: hidden;
 }
 
 .accordion-header {
+  background-color: #1a1a1a;
   padding: 1rem;
   font-size: 1.1rem;
   font-weight: bold;
@@ -36,16 +42,25 @@ body {
   background-color: #1e1e2f;
 }
 
+.accordion-header .arrow {
+  transition: transform 0.3s ease;
+}
+
+.accordion-header.active .arrow {
+  transform: rotate(180deg);
+}
+
 .accordion-content {
   max-height: 0;
   overflow: hidden;
   background-color: #000;
-  transition: max-height 0.3s ease;
+  transition: max-height 0.4s ease;
+  padding: 0 1rem;
 }
 
 .accordion-content ul {
   list-style: none;
-  padding: 1rem;
+  padding: 1rem 0;
   margin: 0;
 }
 
@@ -58,5 +73,5 @@ body {
 .duration {
   font-weight: normal;
   font-size: 0.9rem;
-  color: #9ca3af;
+  margin-left: auto;
 }

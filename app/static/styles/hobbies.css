@@ -4,20 +4,20 @@
   font-family: 'Roboto', sans-serif;
   text-align: center;
   padding: 4rem 1rem;
-  margin-top: 100px; 
+  margin-top: 0;
 }
 
 .hobbies-container {
   position: relative;
   max-width: 700px;
-  margin: 0 auto;
+  margin: 8rem auto 0 auto;
 }
 
 .center-image {
   position: relative;
   width: 400px;
   height: 400px;
-  margin: 4rem 3rem;
+  margin: 4rem auto 0 auto; 
 }
 
 .headshot {
@@ -32,16 +32,6 @@
   transform: translate(-50%, -50%);
   z-index: 2;
 }
-
-/* .orbit {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  position: absolute;
-  z-index: 1;
-  margin-top: 5px;
-} */
 
 .orbit {
   position: absolute;
@@ -84,7 +74,6 @@
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 
 .gym    { top: 0; left: 50%; transform: translate(-50%, -50%); }
 .palak  { top: 50%; left: 0%; transform: translate(-50%, -50%); }

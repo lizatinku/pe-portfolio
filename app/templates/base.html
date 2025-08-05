@@ -17,23 +17,34 @@
   {% block extra_styles %}{% endblock %}
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
-    <div class="mlh-logo-container">
-      <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="MLH Fellowship Logo" class="mlh-logo" />
-    </div>
-    <div class="menu-bar">
-      <a href="{{ url_for('about') }}" class="btn">About</a>
-      <a href="{{ url_for('experience') }}" class="btn">Experience</a>
-      <a href="{{ url_for('hobbies') }}" class="btn">Hobbies</a>
-      <a href="{{ url_for('travel') }}" class="btn">Travel</a>
-      <a href="{{ url_for('education') }}" class="btn">Education</a>
-      <a href="{{ url_for('timeline') }}" class="btn">Timeline</a>
+    <div class="navbar-container">
+      <div class="mlh-logo-container">
+        <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="MLH Fellowship Logo" class="mlh-logo" />
+      </div>
+
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+      <div class="menu-bar" id="menuBar">
+        <a href="{{ url_for('about') }}" class="btn">About</a>
+        <a href="{{ url_for('experience') }}" class="btn">Experience</a>
+        <a href="{{ url_for('hobbies') }}" class="btn">Hobbies</a>
+        <a href="{{ url_for('travel') }}" class="btn">Travel</a>
+        <a href="{{ url_for('education') }}" class="btn">Education</a>
+        <a href="{{ url_for('timeline') }}" class="btn">Timeline</a>
+      </div>
     </div>
   </nav>
 
   {% block content %}{% endblock %}
   {% block extra_scripts %}{% endblock %}
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menuBar');
+      menu.classList.toggle('show');
+    }
+  </script>
 
 </body>
 </html>

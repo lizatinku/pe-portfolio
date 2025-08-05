@@ -5,26 +5,28 @@
 {% endblock %}
 
 {% block content %}
-  <section class="hobbies-container hobbies-body">
-    <div class="center-image">
-      <img src="{{ url_for('static', filename='img/liza.jpg') }}" alt="Liza Tinku" class="headshot" />
-      <div class="orbit-wrapper">
-        <div class="orbit gym">
-          <img src="{{ url_for('static', filename='img/gym.jpg') }}" alt="Gym" />
-        </div>
-        <div class="orbit palak">
-          <img src="{{ url_for('static', filename='img/palakpaneer.jpg') }}" alt="Palak Paneer" />
-        </div>
-        <div class="orbit tacos">
-          <img src="{{ url_for('static', filename='img/Beeftacos.webp') }}" alt="Beef Tacos" />
-        </div>
-        <div class="orbit friends">
-          <img src="{{ url_for('static', filename='img/friends.jpg') }}" alt="Friends" />
+  <section class="hobbies-body">
+    <div class="hobbies-container">
+      <div class="center-image">
+        <img src="{{ url_for('static', filename='img/liza.jpg') }}" alt="Liza Tinku" class="headshot" />
+        <div class="orbit-wrapper">
+          <div class="orbit gym">
+            <img src="{{ url_for('static', filename='img/gym.jpg') }}" alt="Gym" />
+          </div>
+          <div class="orbit palak">
+            <img src="{{ url_for('static', filename='img/palakpaneer.jpg') }}" alt="Palak Paneer" />
+          </div>
+          <div class="orbit tacos">
+            <img src="{{ url_for('static', filename='img/Beeftacos.webp') }}" alt="Beef Tacos" />
+          </div>
+          <div class="orbit friends">
+            <img src="{{ url_for('static', filename='img/friends.jpg') }}" alt="Friends" />
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Optional fun caption block -->
+    <!-- Optional caption text -->
     <!--
     <div class="hobbies-text">
       <h4 class="gradient-text">

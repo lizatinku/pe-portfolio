@@ -92,7 +92,7 @@ def education():
             "courses": ["A-Level Math", "A-Level Physics", "A Level Computer Science"]
         }
     ]
-    return render_template("education.html", title="education")
+    return render_template("education.html", title="education",  education=education)
 
 @app.route('/experience')
 def experience():
