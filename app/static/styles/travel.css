@@ -1,3 +1,14 @@
+header.site-navbar {
+  position: sticky;     
+  top: 0;
+  z-index: 1000;
+}
+
+.travel-body, #map {
+  position: relative;
+  z-index: 1;
+}
+
 .travel-body {
   background-color: #000;
   color: #fff;

@@ -1,33 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Places I've Been</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles/travel.css') }}">
+{% extends "base.html" %}
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-sA+U2ZHt5j8eV1JufwQAK3E6V5J0YzcyKnCzzN1fUj4="
-    crossorigin=""
-  />
-</head>
-<body>
-  <section class="travel-body">
-    <h2>🌍 Places I've Visited</h2>
-    <p>Zoom in and click the pins to explore where I've been!</p>
-    <div id="map"></div>
-  </section>
+{% block title %}Places I've Visited{% endblock %}
 
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script>
-    const map = L.map('map').setView([20, 0], 2); // Global view
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/travel.css') }}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+<section class="travel-body">
+  <h2>🌍 Places I've Visited</h2>
+  <p>Zoom in and click the pins to explore where I've been!</p>
+  <div id="map"></div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  const map = L.map('map').setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
   const places = [
     { name: "Kerala, India", coords: [10.8505, 76.2711] },
@@ -43,12 +33,6 @@
     { name: "Barcelona, Spain", coords: [41.3851, 2.1734] },
     { name: "Los Angeles, CA, USA", coords: [34.0522, -118.2437] },
   ];
-
-
-    places.forEach(p => {
-    L.marker(p.coords).addTo(map).bindPopup(p.name);
-    });
-
-  </script>
-</body>
-</html>
+  places.forEach(p => L.marker(p.coords).addTo(map).bindPopup(p.name));
+</script>
+{% endblock %}
