@@ -13,20 +13,59 @@ jobs:
     steps:
       - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key.pem
-          chmod 600 ~/.ssh/deploy-key.pem
-          cat >> ~/.ssh/config <<END
+          echo "### Setting up SSH..."
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf "%s" "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key
+          chmod 600 ~/.ssh/deploy-key
+
+          echo "### Writing SSH config..."
+          cat > ~/.ssh/config <<EOF
           Host my-vps
-            HostName $SSH_IP
-            User $SSH_USER
-            IdentityFile ~/.ssh/deploy-key.pem
+            HostName ${SSH_IP}
+            User ${SSH_USER}
+            IdentityFile ~/.ssh/deploy-key
+            IdentitiesOnly yes
             StrictHostKeyChecking no
-          END
+          EOF
+
+          echo "### SSH config written:"
+          sed 's/IdentityFile .*/IdentityFile (hidden)/' ~/.ssh/config
         env:
-          SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.SSH_USER }}
           SSH_IP: ${{ secrets.SSH_IP }}
 
-      - name: Print project root directory
-        run: ssh my-vps 'cd ${{ secrets.PROJECT_ROOT }} && pwd'
+      - name: Test SSH connection
+        run: |
+          echo "### Testing SSH connectivity..."
+          ssh -v my-vps "whoami && hostname && echo CONNECTED_OK"
+
+      - name: Print project directory info
+        run: |
+          echo "### Checking project directory..."
+          ssh my-vps "echo PROJECT_ROOT='${{ secrets.PROJECT_ROOT }}'; ls -la '${{ secrets.PROJECT_ROOT }}' || echo 'Directory not found!'"
+
+      - name: Deploy commands
+        run: |
+          echo "### Starting deploy..."
+          ssh my-vps <<'EOSSH'
+            set -e
+            echo "PWD before cd: $(pwd)"
+            cd '${{ secrets.PROJECT_ROOT }}'
+            echo "PWD after cd: $(pwd)"
+            echo "### Listing files in project root..."
+            ls -la
+
+            # === Your real deploy steps go here ===
+            # Example: git pull + restart service or docker compose
+            # git pull --rebase
+            # systemctl restart your-service-name
+
+            # If using docker compose:
+            # docker compose pull
+            # docker compose up -d
+            # docker compose ps
+
+            echo "### DEPLOY DONE"
+          EOSSH
