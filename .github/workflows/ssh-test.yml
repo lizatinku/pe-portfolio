@@ -1,0 +1,41 @@
+name: SSH Smoke Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ssh-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          # write private key from secret
+          printf "%s" "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key
+          chmod 600 ~/.ssh/deploy-key
+
+          # host config
+          cat > ~/.ssh/config <<EOF
+          Host my-vps
+            HostName ${SSH_IP}
+            User ${SSH_USER}
+            IdentityFile ~/.ssh/deploy-key
+            IdentitiesOnly yes
+            StrictHostKeyChecking no
+          EOF
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_IP: ${{ secrets.SSH_IP }}
+
+      - name: Show SSH version & config (sanity)
+        run: |
+          ssh -V
+          echo "----- ~/.ssh/config -----"
+          sed 's/IdentityFile .*/IdentityFile (hidden)/' ~/.ssh/config
+          echo "-------------------------"
+
+      - name: Test SSH connectivity (verbose)
+        run: |
+          ssh -v my-vps "whoami && hostname && echo OK"
