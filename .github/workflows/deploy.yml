@@ -11,15 +11,21 @@ jobs:
     name: "Deploy to VPS"
     runs-on: ubuntu-latest
     steps:
-      - name: Configure SSH
+      - name: Configure SSH (normalize & validate key)
         run: |
-          echo "### Setting up SSH..."
+          set -euxo pipefail
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf "%s" "$SSH_PRIVATE_KEY" > ~/.ssh/deploy-key
+      
+          # Write key and strip any Windows CRLFs that can break OpenSSH
+          printf "%s" "${SSH_PRIVATE_KEY}" > ~/.ssh/deploy-key
+          sed -i 's/\r$//' ~/.ssh/deploy-key
           chmod 600 ~/.ssh/deploy-key
-
-          echo "### Writing SSH config..."
+      
+          # Validate the private key parses correctly (fails fast if malformed)
+          ssh-keygen -y -f ~/.ssh/deploy-key > /dev/null
+      
+          # Write SSH config
           cat > ~/.ssh/config <<EOF
           Host my-vps
             HostName ${SSH_IP}
@@ -28,13 +34,16 @@ jobs:
             IdentitiesOnly yes
             StrictHostKeyChecking no
           EOF
-
-          echo "### SSH config written:"
+      
+          # Show quick sanity (don’t print the key)
+          echo "Key bytes:" $(wc -c < ~/.ssh/deploy-key)
+          echo "Config OK:"
           sed 's/IdentityFile .*/IdentityFile (hidden)/' ~/.ssh/config
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_IP: ${{ secrets.SSH_IP }}
+
 
       - name: Test SSH connection
         run: |
