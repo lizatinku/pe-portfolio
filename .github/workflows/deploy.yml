@@ -2,28 +2,99 @@ name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1.0.0
+      # --- 1) Quick connectivity smoke test (keeps us sane) ---
+      - name: SSH connectivity check (verbose)
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_IP }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd ${{ secrets.PROJECT_ROOT }}
-            echo "Current directory: $(pwd)"
-            echo "Listing files..."
+            set -euxo pipefail
+            echo "### CONNECTIVITY TEST"
+            whoami
+            hostname
+            echo "PROJECT_ROOT='${{ secrets.PROJECT_ROOT }}'"
+            if [ -d "${{ secrets.PROJECT_ROOT }}" ]; then
+              echo "Project directory exists."
+              ls -la "${{ secrets.PROJECT_ROOT }}"
+            else
+              echo "ERROR: Project directory NOT found."
+              exit 2
+            fi
+            echo "### CONNECTIVITY OK"
+
+      # --- 2) Actual deploy with verbose echos ---
+      - name: Deploy (verbose)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            set -euxo pipefail
+
+            echo "=== START DEPLOY ==="
+            echo "User: $(whoami)"
+            echo "Host: $(hostname)"
+            echo "Time: $(date -Is)"
+
+            echo "### cd into project root"
+            cd "${{ secrets.PROJECT_ROOT }}"
+            echo "PWD after cd: $(pwd)"
+
+            echo "### Git status BEFORE pull"
+            git rev-parse --is-inside-work-tree && echo "Inside git repo" || echo "Not a git repo"
+            git remote -v || true
+            git status || true
+            echo "Current HEAD: $(git rev-parse --short HEAD || echo 'n/a')"
+
+            echo "### Pull latest code (rebase)"
+            git fetch --all
+            git pull --rebase || (echo 'git pull failed' && exit 3)
+            echo "New HEAD: $(git rev-parse --short HEAD || echo 'n/a')"
+
+            echo "### List files (sanity)"
             ls -la
-            # === Your deploy commands go here ===
-            # Example:
-            # git pull --rebase
-            # docker compose pull
-            # docker compose up -d
+
+            echo "### Decide deploy strategy"
+            if [ -x "./redeploy-site.sh" ]; then
+              echo "Found executable redeploy-site.sh -> running"
+              ./redeploy-site.sh
+            elif [ -f "docker-compose.yml" ] || [ -f "docker-compose.prod.yml" ]; then
+              echo "Found docker-compose file(s) -> deploying with docker compose"
+              # prefer docker compose v2 if available
+              if command -v docker >/dev/null 2>&1; then
+                docker compose pull || docker-compose pull || true
+                docker compose up -d || docker-compose up -d
+                docker compose ps || docker-compose ps || true
+              else
+                echo "ERROR: docker not installed on server"
+                exit 4
+              fi
+            elif command -v systemctl >/dev/null 2>&1; then
+              echo "Systemd available but no compose/redeploy script detected."
+              echo ">>> If you use a systemd service, set its name below and uncomment:"
+              # sudo systemctl restart your-service-name
+              echo "Skipping systemd restart (no service name set)."
+            else
+              echo "No known deploy mechanism detected. Nothing to do."
+            fi
+
+            echo "### Post-deploy checks"
+            echo "Disk usage:"
+            df -h | sed -n '1,10p'
+            echo "Docker containers (if any):"
+            (docker ps || true)
+
+            echo "=== DEPLOY DONE ==="
